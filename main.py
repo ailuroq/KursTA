@@ -21,6 +21,7 @@ from matplotlib.figure import Figure
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget, \
     QPushButton
 
+from MultiTuring import MultiTuring
 from PlotCanvas import PlotCanvas
 from Turing import Turing
 from WidgetPlot import WidgetPlot
@@ -85,7 +86,7 @@ class Ui_MainWindow(QMainWindow, threading.Thread):
         self.lineEdit.setFont(font)
         self.lineEdit.setObjectName("lineEdit")
         self.pushButton_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_6.setGeometry(QtCore.QRect(880, 640, 291, 61))
+        self.pushButton_6.setGeometry(QtCore.QRect(880, 625, 291, 61))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
@@ -93,16 +94,25 @@ class Ui_MainWindow(QMainWindow, threading.Thread):
         self.pushButton_6.setFont(font)
         self.pushButton_6.setObjectName("pushButton_6")
 
+
+        self.pushButton_8 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_8.setGeometry(QtCore.QRect(590, 690, 271, 61))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setWeight(50)
+        self.pushButton_8.setFont(font)
+        self.pushButton_8.setObjectName("pushButton_8")
         self.widget = QtWidgets.QWidget(self.centralwidget)
 
         self.widget.setGeometry(QtCore.QRect(590, 80, 581, 550))
         vlay = QVBoxLayout(self.widget)
         hlay = QHBoxLayout()
         vlay.addLayout(hlay)
-        self.m = WidgetPlot()
+        self.m = WidgetPlot(self.tab_1)
         vlay.addWidget(self.m)
         self.pushButton_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_5.setGeometry(QtCore.QRect(590, 640, 271, 61))
+        self.pushButton_5.setGeometry(QtCore.QRect(590, 625, 271, 61))
         font = QtGui.QFont()
         font.setPointSize(14)
         font.setBold(False)
@@ -131,17 +141,26 @@ class Ui_MainWindow(QMainWindow, threading.Thread):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Многоленточная МТ"))
         self.label.setText(_translate("MainWindow", "L =  { (01)^n c (10)^n | n >= 1}"))
         self.pushButton_6.setText(_translate("MainWindow", "Остановить построение"))
-        self.pushButton_5.setText(_translate("MainWindow", "Построить график"))
+        self.pushButton_8.setText(_translate("MainWindow", "Построить многолент."))
+        self.pushButton_5.setText(_translate("MainWindow", "Построить однолент."))
         self.pushButton_3.clicked.connect(self.start_oneMT)
+        self.pushButton_4.clicked.connect(self.start_MultiMT)
         self.pushButton_5.clicked.connect(self.m.draw_chart)
+        self.pushButton_6.clicked.connect(self.m.stop_chart)
+        self.pushButton_8.clicked.connect(self.m.draw_chart2)
 
     def start_oneMT(self):
         word = self.lineEdit.text()
         MT = Turing()
+        self.textBrowser_3.clear()
         MT.start(word, self.textBrowser_3)
 
-
-
+    def start_MultiMT(self):
+        word = self.lineEdit.text()
+        MT = MultiTuring()
+        self.textBrowser.clear()
+        self.textBrowser_2.clear()
+        MT.start(word, self.textBrowser_2, self.textBrowser)
 
 if __name__ == "__main__":
     import sys

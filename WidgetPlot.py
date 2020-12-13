@@ -15,5 +15,17 @@ class WidgetPlot(QWidget):
         self.layout().addWidget(self.canvas)
 
     def draw_chart(self):
+        self.canvas.stop = False
         t1 = threading.Thread(target=self.canvas.plot)
         t1.start()
+
+    def draw_chart2(self):
+        self.canvas.stop = False
+        t2 = threading.Thread(target=self.canvas.plot2)
+        t2.start()
+
+    def stop_chart(self):
+        self.canvas.stop = True
+
+    def resume_chart(self):
+        self.canvas.stop = False
